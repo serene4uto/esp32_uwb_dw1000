@@ -21,8 +21,7 @@ static void inactive_anchor_cb(DW1000Device *device) {
 }
 
 
-void dstwr_tag_main() {
-
+void dstwr_tag_task_init() {
     esp_log_level_set(DSTWR_TAG_LOG_TAG, DSTWR_TAG_LOG_LEVEL);
 
     DW1000Ranging.initCommunication(DW_PIN_RST, DW_SPI_CS, DW_PIN_IRQ);
@@ -46,9 +45,17 @@ void dstwr_tag_main() {
 
 
     ESP_LOGI(DSTWR_TAG_LOG_TAG, "DSTWR Tag started");
+}
 
+void dstwr_tag_task() {
     while(1)
     {
         DW1000Ranging.loop();
     }
+}
+
+void dstwr_tag_main() {
+    dstwr_tag_task_init();
+
+    dstwr_tag_task();
 }

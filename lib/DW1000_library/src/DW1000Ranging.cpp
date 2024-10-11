@@ -288,7 +288,7 @@ void DW1000RangingClass::removeNetworkDevices(int16_t index) {
 		_networkDevicesNumber--;
 	}
 	else {
-		//we translate all the element wich are after the one we want to delete.
+		//we translate all the element which are after the one we want to delete.
 		for(int16_t i = index; i < _networkDevicesNumber-1; i++) { // TODO 8bit?
 			memcpy((uint8_t *)&_networkDevices[i], &_networkDevices[i+1], sizeof(DW1000Device));  //3_16_24 pointer cast sjr
 			_networkDevices[i].setIndex(i);
@@ -324,6 +324,10 @@ DW1000Device* DW1000RangingClass::getDistantDevice() {
 	
 	return &_networkDevices[_lastDistantDevice];
 	
+}
+
+DW1000Device* DW1000RangingClass::getNetworkDevices() {
+	return _networkDevices;
 }
 
 

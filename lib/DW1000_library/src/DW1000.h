@@ -469,7 +469,7 @@ public:
 	static boolean _debounceClockEnabled;
 
 	/* Arduino interrupt handler */
-	static void handleInterrupt();
+	static void IRAM_ATTR handleInterrupt();
 	
 	/* Allow MAC frame filtering . */
 	// TODO auto-acknowledge

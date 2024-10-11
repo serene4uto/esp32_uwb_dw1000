@@ -1,11 +1,25 @@
 #ifndef __DSTWR_TAG_H__
 #define __DSTWR_TAG_H__
 
+
+#define DSTWR_TAG_ADDRESS_STR_TAG1 "7D:01:22:EA:82:60:3B:9C"
+#define DSTWR_TAG_ADDRESS_STR_TAG2 "7D:02:22:EA:82:60:3B:9C"
+
+
 #define DSTWR_TAG_LOG_TAG "DSTWR_TAG"
 #define DSTWR_TAG_LOG_LEVEL ESP_LOG_INFO
 
-#define DSTWR_TAG_ADDRESS_STR "7D:01:22:EA:82:60:3B:9C"
 #define DSTWR_TAG_OPERATION_MODE DW1000.MODE_LONGDATA_RANGE_ACCURACY
+
+// #define DSTWR_TAG_ADDRESS_STR DSTWR_TAG_ADDRESS_STR_TAG1
+#define DSTWR_TAG_ADDRESS_STR DSTWR_TAG_ADDRESS_STR_TAG2
+
+
+#define DSTWR_TAG_MAX_ANCHORS 4
+#define DSTWR_TAG_MIN_ANCHORS 4
+#define DSTWR_TAG_ANCHOR_NETWORK_ID 0xDECA
+#define DSTWR_TAG_ANCHOR_RANGE_EXPIRE_MS 5000 // milliseconds
+
 
 // connection pins
 #define DW_SPI_SCK 18
@@ -17,5 +31,7 @@
 #define DW_PIN_IRQ 34
 
 extern void dstwr_tag_main();
+
+extern void dstwr_tag_uros_main();
 
 #endif // __DSTWR_TAG_H__

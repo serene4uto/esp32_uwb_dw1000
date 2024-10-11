@@ -118,6 +118,8 @@ public:
 	
 	static DW1000Device* getDistantDevice();
 	static DW1000Device* searchDistantDevice(byte shortAddress[]);
+
+	static DW1000Device* getNetworkDevices();
 	
 	//FOR DEBUGGING
 	static void visualizeDatas(byte datas[]);

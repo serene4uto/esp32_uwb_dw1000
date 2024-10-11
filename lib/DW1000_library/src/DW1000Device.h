@@ -63,6 +63,8 @@ public:
 	byte* getByteAddress();
 	
 	int8_t getIndex() { return _index; }
+
+	int32_t getLastActivity() { return _activity; };
 	
 	//String getAddress();
 	byte* getByteShortAddress();
