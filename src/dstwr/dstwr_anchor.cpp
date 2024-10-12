@@ -8,7 +8,7 @@
 #define DSTWR_EXPO_MOVING_AVG_ALPHA (2.0 / (DSTWR_EXPO_MOVING_AVG_WINDOW_SIZE + 1))
 
 #define DSTWR_ANCHOR_CALIBRATION_TARGET_DISTANCE 0.3 // meters
-#define DSTWR_ANCHOR_CALIBRATION_TRIALS 1
+#define DSTWR_ANCHOR_CALIBRATION_TRIALS 10
 #define DSTWR_ANCHOR_CALIBRATION_STARTING_DELAY 16600
 #define DSTWR_ANCHOR_CALIBRATION_INIT_STEP_SIZE 100
 #define DSTWR_ANCHOR_CALIBRATION_LIMIT_STEP_SIZE 3 // minimum step size allowed, this mean smallest delay change possible
@@ -18,7 +18,9 @@ typedef enum {
     DSTWR_ANCHOR_MODE_CALIBRATE,
 } dstwr_anchor_mode_t;
 
-#define DSTWR_ANCHOR_MODE DSTWR_ANCHOR_MODE_CALIBRATE   
+// choose mode for anchor
+#define DSTWR_ANCHOR_MODE DSTWR_ANCHOR_MODE_NORMAL // uncomment this line to disable calibration mode
+// #define DSTWR_ANCHOR_MODE DSTWR_ANCHOR_MODE_CALIBRATE // uncomment this line to enable calibration mode
 
 volatile float DRAM_ATTR anchorCalibTargetDist = DSTWR_ANCHOR_CALIBRATION_TARGET_DISTANCE;
 volatile dstwr_anchor_mode_t DRAM_ATTR dstwrAnchorMode = DSTWR_ANCHOR_MODE_NORMAL;
@@ -68,7 +70,7 @@ static void newRange()
                 currentAntDelay = sum / DSTWR_ANCHOR_CALIBRATION_TRIALS;
                 ESP_LOGI(DSTWR_ANCHOR_LOG_TAG, "Average Calibrated Antenna delay: %d", currentAntDelay);
                 ESP_LOGI(DSTWR_ANCHOR_LOG_TAG, "Calibration done");
-                DW1000.setAntennaDelay(currentAntDelay);
+                DW1000.setAntennaDelay(currentAntDelay); 
 
                 // save the calibrated antenna delay
                 if(dstwrAnchorPrefs.begin("dstwr_anchor", false)) {
@@ -80,7 +82,8 @@ static void newRange()
                     ESP_LOGE(DSTWR_ANCHOR_LOG_TAG, "Failed to save calibrated Antenna delay");
                 }
 
-                // while(1);
+                while(1);// stop here
+
                 dstwrAnchorMode = DSTWR_ANCHOR_MODE_NORMAL; // switch back to normal mode
                 return;
             }
@@ -126,8 +129,6 @@ static void inactiveDevice(DW1000Device *device)
 
 void dstwr_anchor_main() {
     esp_log_level_set(DSTWR_ANCHOR_LOG_TAG, DSTWR_ANCHOR_LOG_LEVEL);
-
-
 
     dstwrAnchorMode = DSTWR_ANCHOR_MODE;
 

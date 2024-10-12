@@ -17,17 +17,21 @@
 
 #define DSTWR_ANCHOR_ADELAY_DEFAULT 16384
 // leftmost two bytes below will become the "short address"
+
+// anchor 1
 // #define DSTWR_ANCHOR_ADDR "84:01:22:EA:82:60:3B:9C"
-// #define DSTWR_ANCHOR_ADELAY 16502
 
+// anchor 2
 // #define DSTWR_ANCHOR_ADDR "84:02:22:EA:82:60:3B:9C"
-// #define DSTWR_ANCHOR_ADELAY 16500
 
+// anchor 3
 // #define DSTWR_ANCHOR_ADDR "84:03:22:EA:82:60:3B:9C"
-// #define DSTWR_ANCHOR_ADELAY 16495
 
-#define DSTWR_ANCHOR_ADDR "84:04:22:EA:82:60:3B:9C"
-// #define DSTWR_ANCHOR_ADELAY 16502 
+// anchor 4
+// #define DSTWR_ANCHOR_ADDR "84:04:22:EA:82:60:3B:9C"
+
+// anchor 5
+#define DSTWR_ANCHOR_ADDR "84:05:22:EA:82:60:3B:9C"
 
 
 extern void dstwr_anchor_main();

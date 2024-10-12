@@ -13,6 +13,7 @@
 /* Configuration */
 #define TEST_MODE TEST_DSTWR
 
+// Choose device role
 // #define UWB_ROLE DSTWR_SNIFFER
 // #define UWB_ROLE DSTWR_ANCHOR
 // #define UWB_ROLE DSTWR_TAG

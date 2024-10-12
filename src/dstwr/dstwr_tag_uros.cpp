@@ -34,12 +34,14 @@ static void new_range_cb() {
 
         //TODO: sort to get most recent anchors
         last_anchor_distance[i].short_address = anchorDevice->getShortAddress();
-        
-        if (anchorDevice->getRange() > 0) {
-            last_anchor_distance[i].range = anchorDevice->getRange();
-        } else {
-            last_anchor_distance[i].range = 0;
+        last_anchor_distance[i].range = anchorDevice->getRange();
+
+        if (anchorDevice->getRange() < 0) {
+            ESP_LOGI(DSTWR_TAG_LOG_TAG, "Range failed");
+            return;
         }
+
+        last_anchor_distance[i].range = anchorDevice->getRange();
     }
 
     // ESP_LOGI(DSTWR_TAG_LOG_TAG, "-----------------");
