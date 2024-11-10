@@ -15,11 +15,16 @@ static void new_range_cb() {
     DW1000Device *anchorDevice = NULL;
     uint8_t numAnchorsToSend = DSTWR_TAG_MAX_ANCHORS;
 
-
     // ESP_LOGI(DSTWR_TAG_LOG_TAG, "0x%02X, %02f", anchorDevice->getShortAddress(), anchorDevice->getRange());
 
     if (DW1000Ranging.getNetworkDevicesNumber() < DSTWR_TAG_MIN_ANCHORS) {
+        // print current anchors
         ESP_LOGI(DSTWR_TAG_LOG_TAG, "Not enough anchors");
+        for (int i = 0; i < DW1000Ranging.getNetworkDevicesNumber(); i++) {
+            anchorDevice = &DW1000Ranging.getNetworkDevices()[i];
+            ESP_LOGI(DSTWR_TAG_LOG_TAG, "0x%02X, %02f", anchorDevice->getShortAddress(), anchorDevice->getRange());
+        }
+        
         return;
     }
 
