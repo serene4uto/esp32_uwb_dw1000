@@ -5,8 +5,8 @@
 #include "dstwr_tag.h"
 
 // WiFi info
-#define WIFI_SSID "serene_2G"
-#define WIFI_PSK "10541054"
+// #define WIFI_SSID "serene_2G"
+// #define WIFI_PSK "10541054"
 
 // #define WIFI_SSID "gogofarm_2.4G"
 // #define WIFI_PSK "Snsolqhdks1!"
@@ -18,8 +18,14 @@
 // #define UROS_AGENT_IP {192,168,1,12}
 // #define UROS_AGENT_IP {192,168,50,182}
 // #define UROS_AGENT_IP {192,168,50,142}
-#define UROS_AGENT_IP {192,168,1,54}
-#define UROS_AGENT_PORT 8888
+// #define UROS_AGENT_IP {192,168,1,54}
+// #define UROS_AGENT_PORT 8888
+
+//  Hardware configuration
+#define UROS_UART_RX 26
+#define UROS_UART_TX 27
+#define UROS_UART_BAUDRATE 115200
+
 
 #define UROS_RANGE_PUB_NODE_NAME "uros_uwb_tag_range_pub"
 #define UROS_RANGE_PUB_NAMESPACE ""

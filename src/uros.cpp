@@ -26,8 +26,10 @@ uwb_interfaces__msg__UwbRange uwb_range_msg;
 
 QueueHandle_t uros_range_queue = NULL;
 
-IPAddress uRos_Agent_IP(UROS_AGENT_IP);
-uint16_t uRos_Agent_Port = UROS_AGENT_PORT;
+// IPAddress uRos_Agent_IP(UROS_AGENT_IP);
+// uint16_t uRos_Agent_Port = UROS_AGENT_PORT;
+
+HardwareSerial uROS_Serial(1);
 
 // Error handling loop
 static void error_loop() {
@@ -37,11 +39,34 @@ static void error_loop() {
     }
 }
 
+static void uros_hw_init(void) 
+{
+    uROS_Serial.begin(UROS_UART_BAUDRATE, SERIAL_8N1, UROS_UART_RX, UROS_UART_TX);
+    while (!uROS_Serial)
+    {
+        ESP_LOGE(UROS_LOG_TAG, "Serial port not available");
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+
 void uros_range_pub_task_init() {
     esp_log_level_set(UROS_LOG_TAG, UROS_LOG_LEVEL);
 
-    set_microros_wifi_transports((char *)WIFI_SSID, (char *)WIFI_PSK, uRos_Agent_IP, uRos_Agent_Port);
+    uros_hw_init();
+
+    // set_microros_wifi_transports((char *)WIFI_SSID, (char *)WIFI_PSK, uRos_Agent_IP, uRos_Agent_Port);
+    set_microros_serial_transports(uROS_Serial);
     delay(2000);
+
+    // ping the agent to test the connection
+    ESP_LOGI(UROS_LOG_TAG, "Checking micro-ROS agent...");
+    while (RMW_RET_OK != rmw_uros_ping_agent(1000, 5))
+    {
+        ESP_LOGE(UROS_LOG_TAG,\
+            "micro-ROS agent not found. Retrying...");
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+    ESP_LOGI(UROS_LOG_TAG, "micro-ROS agent found. Initializing...");
 
     rcl_rangepub_allocator = rcl_get_default_allocator();
     
